@@ -1,0 +1,15 @@
+D:\source\advent2021\day1\bin\Debug\net6.0\day1.exe
+D:\source\advent2021\day1\bin\Debug\net6.0\day1.deps.json
+D:\source\advent2021\day1\bin\Debug\net6.0\day1.runtimeconfig.json
+D:\source\advent2021\day1\bin\Debug\net6.0\day1.dll
+D:\source\advent2021\day1\bin\Debug\net6.0\ref\day1.dll
+D:\source\advent2021\day1\bin\Debug\net6.0\day1.pdb
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.csproj.AssemblyReference.cache
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.GeneratedMSBuildEditorConfig.editorconfig
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.AssemblyInfoInputs.cache
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.AssemblyInfo.cs
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.csproj.CoreCompileInputs.cache
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.dll
+D:\source\advent2021\day1\obj\Debug\net6.0\ref\day1.dll
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.pdb
+D:\source\advent2021\day1\obj\Debug\net6.0\day1.genruntimeconfig.cache
