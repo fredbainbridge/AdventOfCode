@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\source\\advent2021\\day1\\day1.csproj",
-      "projectName": "day1",
-      "projectPath": "D:\\source\\advent2021\\day1\\day1.csproj",
+      "projectUniqueName": "D:\\source\\advent2021\\2021\\2021.csproj",
+      "projectName": "2021",
+      "projectPath": "D:\\source\\advent2021\\2021\\2021.csproj",
       "packagesPath": "D:\\Users\\FredBainbridge\\.nuget\\packages\\",
-      "outputPath": "D:\\source\\advent2021\\day1\\obj\\",
+      "outputPath": "D:\\source\\advent2021\\2021\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "D:\\Users\\FredBainbridge\\AppData\\Roaming\\NuGet\\NuGet.Config"
