@@ -10,3 +10,7 @@ int position = sub.GetNewPosition(inputFileDay2);
 Console.WriteLine(position);
 int positionWithAim = sub.getNewPositionWithAim(inputFileDay2);
 Console.WriteLine(positionWithAim);
+long day3AnswerPart1 = sub.PowerConsumption("day3.txt");
+Console.WriteLine(day3AnswerPart1);
+long day3AnswerPart2 = sub.LifeSupportRating("day3.txt");
+Console.WriteLine(day3AnswerPart2);

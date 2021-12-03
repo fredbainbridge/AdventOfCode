@@ -88,4 +88,111 @@ public class Submarine {
         }
         return horizontal * depth;
     }
+    public long PowerConsumption (string inputFile) {
+        var lines = File.ReadAllLines(inputFile);
+        int length = lines[0].Length;
+        int[] zeros = new int[length];
+        int[] ones = new int[length];
+        for(int i = 0; i < length; i++) {
+            foreach(var line in lines) {
+                if(line[i].Equals('0')) {
+                    zeros[i]++;
+                }
+                else {
+                    ones[i]++;
+                }
+            }
+        }
+        string gammaString = "";
+        string epsilonString = "";
+        for(int i = 0; i < length; i++) {
+            if(zeros[i] > ones[i]) {
+                gammaString = gammaString + "0";
+                epsilonString = epsilonString + "1";
+            }
+            else {
+                gammaString = gammaString + "1";
+                epsilonString = epsilonString + "0";
+            }
+            if(zeros[i] == ones[i]) {
+                Console.WriteLine("TIE!!!");
+            }
+        }
+        var answer = Convert.ToInt64(epsilonString, 2) * Convert.ToInt64(gammaString, 2);
+        return answer;
+        //makke an int from th e stinrg
+    }
+
+    public long LifeSupportRating(string inputFile) {
+        var lines = File.ReadAllLines(inputFile);
+        int length = lines[0].Length;
+        string oxyRating = "";
+        string co2Rating = "";
+        List<int> keeperIndexes = new List<int>();
+        for(int i = 0; i < lines.Count(); i++ ) {
+            keeperIndexes.Add(i);
+        }
+        for(int i = 0; i < length; i++) {
+            List<int> zeroIndexes = new List<int>();
+            List<int> oneIndexes = new List<int>();
+            
+           //what is the most common bit?
+           for(int k = 0; k < lines.Count(); k++) {
+               if(!keeperIndexes.Contains(k)) {
+                   continue;
+               }
+               if(lines[k][i].Equals('0')) {
+                   zeroIndexes.Add(k);
+               }
+               else {
+                   oneIndexes.Add(k);
+               }
+           }
+           if(zeroIndexes.Count() == oneIndexes.Count()) {
+               keeperIndexes = oneIndexes.ToList<int>();
+           }
+           if(zeroIndexes.Count() > oneIndexes.Count()) {
+               keeperIndexes = zeroIndexes.ToList<int>();
+           }
+           if(zeroIndexes.Count() < oneIndexes.Count()) {
+               keeperIndexes = oneIndexes.ToList<int>();
+           }
+           if(keeperIndexes.Count() == 1) {
+               oxyRating = lines[keeperIndexes[0]];
+           }
+        }
+        for(int i = 0; i < lines.Count(); i++ ) {
+            keeperIndexes.Add(i);
+        }
+        for(int i = 0; i < length; i++) {
+            List<int> zeroIndexes = new List<int>();
+            List<int> oneIndexes = new List<int>();
+            
+           //what is the least common bit?
+           for(int k = 0; k < lines.Count(); k++) {
+               if(!keeperIndexes.Contains(k)) {
+                   continue;
+               }
+               if(lines[k][i].Equals('0')) {
+                   zeroIndexes.Add(k);
+               }
+               else {
+                   oneIndexes.Add(k);
+               }
+           }
+           if(zeroIndexes.Count() == oneIndexes.Count()) {
+               keeperIndexes = zeroIndexes.ToList<int>();
+           }
+           if(zeroIndexes.Count() > oneIndexes.Count()) {
+               keeperIndexes = oneIndexes.ToList<int>();
+           }
+           if(zeroIndexes.Count() < oneIndexes.Count()) {
+               keeperIndexes = zeroIndexes.ToList<int>();
+           }
+           if(keeperIndexes.Count() == 1) {
+               co2Rating = lines[keeperIndexes[0]];
+           }
+        }
+        return Convert.ToInt64(oxyRating, 2) * Convert.ToInt64(co2Rating, 2);;
+    }
 }
