@@ -231,7 +231,122 @@ public class Submarine
                 co2Rating = lines[keeperCO2Indexes[0]];
             }
         }
-
         return Convert.ToInt64(oxyRating, 2) * Convert.ToInt64(co2Rating, 2); ;
+    }
+    private List<int[]> getBoards(string inputFile) {
+        var lines = File.ReadAllLines(inputFile);
+        
+        //numbers = new int[]{30,53,27,57,35};
+        List<int[]> boards = new List<int[]>();
+        int[] board = new int[25];
+        int counter = 0;
+        for(int i = 2; i < lines.Count(); i++) {
+            if(string.IsNullOrEmpty(lines[i].Trim())) {
+                counter = 0;
+                boards.Add(board);
+                board = new int[25];
+                continue;
+            }
+            var strLines = lines[i].Split(' ');
+            foreach(string s in strLines) {
+                if(string.IsNullOrWhiteSpace(s)) {
+                    continue;
+                }
+                board[counter] = Int32.Parse(s);
+                counter++;
+            }
+        }
+        boards.Add(board);
+        return boards;
+    }
+    private int[] getBingoNumbers(string inputFile) {
+        var lines = File.ReadAllLines(inputFile);
+        string[] numbersStrings = lines[0].Split(',');
+        int[] numbers = new int[numbersStrings.Count()];
+        for (int i = 0; i< numbersStrings.Count(); i++) {
+            numbers[i] = Int32.Parse(numbersStrings[i]);
+        }
+        return numbers;
+    }
+    public int BingoWinner(string inputFile) {
+        var boards = getBoards(inputFile);
+        var numbers = getBingoNumbers(inputFile);
+        foreach(int num in numbers) {
+            foreach(int[] b in boards) {
+                for(int i = 0; i < b.Length; i++) {
+                    if(b[i] == num) {
+                        b[i] = -1;
+                        if(isWinner(b)) {
+                            int sum = 0;
+                            for(int z = 0; z < b.Length; z++) {
+                                if(b[z] != -1) {
+                                    sum += b[z];
+                                }
+                            }
+                            return sum * num;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public int LastBingerWinner(string inputFile) {
+        var boards = getBoards(inputFile);
+        var numbers = getBingoNumbers(inputFile);
+        List<int> winnersIndex = new List<int>();
+        List<int> winnersScore = new List<int>();
+        foreach(int num in numbers) {
+            int boardCounter = 0;
+            foreach(int[] b in boards) {
+                boardCounter++;
+                if(winnersIndex.Contains(boardCounter)) {
+                    continue;
+                }
+                for(int i = 0; i < b.Length; i++) {
+                    if(b[i] == num) {
+                        b[i] = -1;
+                        if(isWinner(b)) {
+                            winnersIndex.Add(boardCounter);
+                            int sum = 0;
+                            for(int z = 0; z < b.Length; z++) {
+                                if(b[z] != -1) {
+                                    sum += b[z];
+                                }
+                            }
+                            winnersScore.Add(sum * num);
+                        }
+                    }
+                }
+            }
+        }
+        return winnersScore.Last();
+    }
+    private bool isWinner(int[] board) {
+        bool winner = true;
+        for(int i = 0; i < 5; i++) {
+            winner = true;
+            for(int k = 0; k < 5; k++) {
+                if(board[i * 5 + k] != -1) { 
+                    winner = false;
+                }
+            }
+            if(winner) {
+                return true;
+            }
+        }
+        for(int i = 0; i< 5; i++) {
+            winner = true;
+            for(int k = 0; k < 25; k+=5) {
+                if(board[i + k] != -1) {
+                    winner = false;
+                }
+            }
+            if(winner) {
+                return true;
+            }
+        }
+        return false;
     }
 }

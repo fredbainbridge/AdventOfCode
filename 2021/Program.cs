@@ -14,3 +14,7 @@ long day3AnswerPart1 = sub.PowerConsumption("day3.txt");
 Console.WriteLine(day3AnswerPart1);
 long day3AnswerPart2 = sub.LifeSupportRating("day3.txt");
 Console.WriteLine(day3AnswerPart2);
+int bingWinnerSum = sub.BingoWinner("day4input.txt");
+Console.WriteLine(bingWinnerSum);
+int lastBingerWinnerScore = sub.LastBingerWinner("day4input.txt");
+Console.WriteLine(lastBingerWinnerScore);
