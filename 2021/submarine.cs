@@ -349,4 +349,154 @@ public class Submarine
         }
         return false;
     }
+    public int HydroVentsVertHorz(string inputFile) {
+        List<Line> lines = getCoordinates(inputFile);
+        List<Line> vhLines = getVerticalOrHorizontalLines(lines);
+        var points = getPointSet(vhLines);
+        int counter = 0;
+        foreach(var x in points) {
+            if(x.Value > 1) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+    public int HydroVentsVertHorzDiag(string inputFile) {
+        List<Line> lines = getCoordinates(inputFile);
+        List<Line> allLines = getVerticalOrHorizontalLines(lines);
+        List<Line> diagLines = getDiagnolLines(lines);
+        allLines.AddRange(diagLines);
+        var points = getPointSet(allLines);
+        int counter = 0;
+        foreach(var x in points) {
+            if(x.Value > 1) {
+                //Console.WriteLine($"count: {x.Value} x: {x.Key.x}, y: {x.Key.y}");
+                counter++;
+            }
+        }
+        return counter;
+    }
+    private Dictionary<Point, int> getPointSet(List<Line> lines) {
+        PointEqualityComparer pEqC = new PointEqualityComparer();
+        Dictionary<Point, int> points = new Dictionary<Point, int>(pEqC);
+        foreach(Line l in lines) {
+            //get all point in the line.
+            if(l == null) {
+                continue;
+            }
+            int dx = l.P2.x - l.P1.x;
+            int dy = l.P2.y - l.P1.y;
+            int start = 0; int end = 0;
+            int m = 0;
+            int c = 0;
+            if(dx == 0) {
+                start = l.P1.y; end = l.P2.y;
+            }
+            else if(dy == 0) {
+                start = l.P1.x; end = l.P2.x;
+            } 
+            else {
+                m = (l.P1.y - l.P2.y) / (l.P1.x - l.P2.x);
+                c = l.P1.y - l.P1.x * m;
+                start = l.P1.x;
+                end = l.P2.x;
+            }
+            if(start > end) {
+                int tmp = end;
+                end = start;
+                start = tmp;
+            }
+            for(int i = start; i <= end; i++) {
+                Point p = new Point();
+                if(dx == 0) {
+                    p.x = l.P1.x;
+                    p.y = i;
+                }else if(dy == 0) {
+                    p.x = i;
+                    p.y = l.P1.y;
+                }
+                else {
+                    p.x = i;
+                    p.y = Math.Abs(m * i + c);
+                }
+                if(points.ContainsKey(p)) {
+                    points[p]++;
+                }
+                else{
+                    points.Add(p,1);
+                }
+            }
+        }
+        return points;
+    }
+    private class PointEqualityComparer : IEqualityComparer<Point> {
+        public bool Equals(Point? p1, Point? p2) {
+            if(p1 == null && p2 == null) {
+                return true;
+            }
+            else if (p1 == null || p2 == null) {
+                return false;
+            }
+            else if( p1.x == p2.x && p2.y == p2.y) {
+                return true;
+            }
+            return false;
+        }
+        public int GetHashCode (Point p) {
+            int hCode = 1000*(p.x + 1000) + (p.y + 1000);
+            return hCode;
+        }
+    }
+    private class Point {
+        public int x {get; set;}
+        public int y {get; set;}
+
+    }
+    private class Line {
+        public Point P1 {get; set;}
+        public Point P2 {get; set;}
+        public Line() {
+            P1 = new Point();
+            P2 = new Point();
+        }
+    }
+
+    private List<Line> getVerticalOrHorizontalLines(List<Line> lines) {
+        List<Line> vertHorLines = new List<Line>();
+        foreach(Line l in lines) {
+            if(l.P1.x == l.P2.x || l.P1.y == l.P2.y) {
+                vertHorLines.Add(l);
+            }
+        }
+        return vertHorLines;
+    }
+    private List<Line> getDiagnolLines(List<Line> lines) {
+        List<Line> diagLines = new List<Line>();
+        foreach(Line l in lines) {
+            if(Math.Abs(l.P1.x - l.P2.x) == Math.Abs(l.P1.y - l.P2.y)) {
+                diagLines.Add(l);
+            }
+        }
+        return diagLines;
+    }
+    private List<Line> getCoordinates(string inputFile) {
+        List<Line> lines = new List<Line>();
+        var linesStr = File.ReadAllLines(inputFile);
+        foreach(var lineStr in linesStr) {
+            var points = lineStr.Split(" -> ");
+            Point p1 = new Point() {
+                x = Int32.Parse(points[0].Split(',')[0]),
+                y = Int32.Parse(points[0].Split(',')[1])
+            };
+            Point p2 = new Point() {
+                x = Int32.Parse(points[1].Split(',')[0]),
+                y = Int32.Parse(points[1].Split(',')[1])
+            };
+            Line l = new Line() {
+                P1 = p1, P2 = p2
+            };
+            lines.Add(l);
+        }
+        return lines;
+    }
 }
