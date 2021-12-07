@@ -30,3 +30,8 @@ int numberOfRepeatPoints = sub.HydroVentsVertHorz("day5.txt");
 Console.WriteLine(numberOfRepeatPoints);
 int numberOfRepeatPointsWithDiags = sub.HydroVentsVertHorzDiag("day5.txt");
 Console.WriteLine(numberOfRepeatPointsWithDiags);
+
+// day 6
+Console.WriteLine("Day 6");
+int numFish = sub.LanternFishPopulation("inputtest.txt", 256);
+Console.WriteLine(numFish);

@@ -460,7 +460,6 @@ public class Submarine
             P2 = new Point();
         }
     }
-
     private List<Line> getVerticalOrHorizontalLines(List<Line> lines) {
         List<Line> vertHorLines = new List<Line>();
         foreach(Line l in lines) {
@@ -498,5 +497,37 @@ public class Submarine
             lines.Add(l);
         }
         return lines;
+    }
+    public int LanternFishPopulation(string inputFile, int numdays) {
+        string strInput = File.ReadAllText(inputFile);
+        string[] strsInput = strInput.Split(',');
+        List<int> input = new List<int>();
+        for(int i = 0; i< strsInput.Count(); i++) {
+            input.Add(Int32.Parse(strsInput[i]));
+        }
+        List<int> newFishIndexes = new List<int>();
+        for(int i = 0; i<input.Count; i++) {
+            newFishIndexes.Add(i);
+        }
+        for(int i = 0; i < numdays; i++) {
+            List<int> newFish = new List<int>();
+            
+            int currentCount = input.Count();
+            for(int k = 0; k < currentCount; k++) {
+                if(input[k] > 0) {
+                    input[k]--;
+                }
+                else if (input[k] == 0) {
+                    if(!newFishIndexes.Contains(k)) {
+                        newFishIndexes.Add(k);
+                    }
+                    newFish.Add(8);
+                    input[k] = 6;
+                }
+            }
+            input.AddRange(newFish);
+            //Console.WriteLine(string.Join(",", input));
+        }
+        return input.Count();
     }
 }
